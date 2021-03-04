@@ -57,6 +57,8 @@ int main() {
 	m4.setElement(3,1,Real(1.0f));
 	std::cout << m3 << "\n*\n"<< m4 << "\n=" << std::endl;
 	std::cout << m3.multiply(m4)  << std::endl;
+	std::cout << Matrix<Real>::unit(3) << std::endl << Matrix<Real>::null(3) << std::endl;
+	std::cout << Matrix<Rational>::unit(3) << std::endl << Matrix<Rational>::null(3) << std::endl;
 	return 0;
 }
 

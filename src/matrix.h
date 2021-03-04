@@ -73,6 +73,26 @@ public:
 		return matrix[i][j];
 	}
 
+	static Matrix<T> null(unsigned size) {
+		Matrix<T> result(size,size);
+		for (unsigned i=0;i<size;i++) {
+			for (unsigned j=0;j<size;j++) {
+				result.matrix[i][j] = T::null();
+			}
+		}
+		return result;
+	}
+
+	static Matrix<T> unit(unsigned size) {
+		Matrix<T> result(size,size);
+		for (unsigned i=0;i<size;i++) {
+			for (unsigned j=0;j<size;j++) {
+				result.matrix[i][j] = (i==j?T::unit():T::null());
+			}
+		}
+		return result;
+	}
+
 	Matrix<T> add(Matrix<T>& m2) {
 		if (this->height != m2.height || this->width != m2.width)
 			throw invalid_size_exception(
