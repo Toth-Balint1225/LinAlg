@@ -88,8 +88,8 @@ int main() {
 	m6.setElement(3,1,Rational(6,6));
 	std::cout << m5 << "\n*\n"<< m6 << "\n=" << std::endl;
 	try {
-		std::cout << m5.multiply(m6)  << std::endl;
-		std::cout << m6.multiply(m5) << std::endl;
+		std::cout << m5 * m6  << std::endl;
+		std::cout << m6 * m5 << std::endl;
 	} catch (std::exception& ex) {
 		std::cout << ex.what() << std::endl;	
 	}

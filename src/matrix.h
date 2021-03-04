@@ -92,7 +92,7 @@ public:
 		return result;
 	}
 
-	Matrix<T> add(Matrix<T>& m2) {
+	Matrix<T> add(const Matrix<T>& m2) const {
 		if (this->height != m2.height || this->width != m2.width)
 			throw invalid_size_exception(
 					this->height, this->width, m2.height, m2.width, "add");
@@ -106,7 +106,7 @@ public:
 	}
 
 
-	Matrix<T> multiply(Matrix<T>& other) {
+	Matrix<T> multiply(const Matrix<T>& other) const {
 		if (this->width != other.height)
 			throw invalid_size_exception(
 					this->height, this->width, other.height, other.width, "multiply");
@@ -122,6 +122,16 @@ public:
 		}
 		return result;
 	}
+	Matrix<T> operator +(const Matrix<T>& other) const {
+		return add(other);
+	}
+	Matrix<T> operator -(const Matrix<T>& other) const {
+		return add(multiplyByScalar(T::unit().negate(),other));
+	}
+	Matrix<T> operator *(const Matrix<T>& other) const {
+		return multiply(other);
+	}
+
 };
 
 template <class T = Real>
@@ -146,6 +156,11 @@ Matrix<T> multiplyByScalar(const T& s, const Matrix<T>& m) {
 		}
 	}
 	return result;
+}
+
+template <class T = Real>
+Matrix<T> operator *(const T& s, const Matrix<T>& m) {
+	return multiplyByScalar(s,m);
 }
 
 #endif //MATRIX_H
