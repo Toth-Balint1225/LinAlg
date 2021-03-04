@@ -28,6 +28,9 @@ public:
 	Rational (const Rational& other);
 	~Rational();
 
+	static Rational null();
+	static Rational unit();
+
 	// basic operations
 	Rational addTo(const Rational& other) const;
 	Rational subtract(const Rational& other) const;

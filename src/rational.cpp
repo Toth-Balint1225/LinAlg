@@ -16,6 +16,13 @@ Rational::Rational (const Rational& other):
 Rational::~Rational() {
 }
 
+Rational Rational::null() {
+	return Rational(0,1);
+}
+
+Rational Rational::unit() {
+	return Rational(1,1);
+}
 
 Rational Rational::addTo(const Rational& other) const {
 	int common = lcm(this->denominator,other.denominator);	

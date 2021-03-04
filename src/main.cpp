@@ -1,6 +1,7 @@
 #include <iostream>
 #include "rational.h" 
 #include "matrix.h"
+#include "real.h"
 // scope:
 // - vector operations (override operators)
 // - matrix operatons
@@ -16,14 +17,6 @@ int main() {
 	std::cout << r1*r2 << " " << r1/r3 << std::endl;
 	std::cout << r1+r2 << " " << r1-r3 << std::endl;
 	std::cout << (r1 <= r2) << std::endl;
-	Matrix m(2,3);  // 2 rows, 3 columns
-	m.setElement(0,0,1.0f);
-	m.setElement(0,1,1.1f);
-	m.setElement(0,2,1.2f);
-	m.setElement(1,0,2.0f);
-	m.setElement(1,1,2.1f);
-	m.setElement(1,2,2.2f);
-	std::cout << m << std::endl;
 	Matrix<Rational>* m2 = new Matrix<Rational>(2,3);
 	m2->setElement(0,0,r1);
 	m2->setElement(0,1,r2);
@@ -35,7 +28,35 @@ int main() {
 	std::cout << *m2 << "+\n" << *m2 << "=\n" << m2->add(*m2) << std::endl;
 	std::cout << "2\n*\n" << *m2 << "=\n" << multiplyByScalar(Rational(2,1),*m2);
 	delete m2;
-	std::cout << std::endl;
+	Real re1(1.0f);
+	Real re2(2.0f);
+	std::cout << re1 << " " << re2 << " " << re1*re2 << " " << re1 - re2 << " " << Real::null() << " " << Real::unit() << std::endl;
+	std::cout << Rational::null() << " " << Rational::unit() << std::endl;
+
+	Matrix m3(3,4);
+	m3.setElement(0,0,Real(2.0f));
+	m3.setElement(0,1,Real(0.0f));
+	m3.setElement(0,2,Real(1.0f));
+	m3.setElement(0,3,Real(3.0f));
+	m3.setElement(1,0,Real(1.0f));
+	m3.setElement(1,1,Real(1.0f));
+	m3.setElement(1,2,Real(0.0f));
+	m3.setElement(1,3,Real(4.0f));
+	m3.setElement(2,0,Real(2.0f));
+	m3.setElement(2,1,Real(1.0f));
+	m3.setElement(2,2,Real(4.0f));
+	m3.setElement(2,3,Real(0.0f));
+	Matrix m4(4,2);
+	m4.setElement(0,0,Real(1.0f));
+	m4.setElement(0,1,Real(4.0f));
+	m4.setElement(1,0,Real(0.0f));
+	m4.setElement(1,1,Real(2.0f));
+	m4.setElement(2,0,Real(1.0f));
+	m4.setElement(2,1,Real(1.0f));
+	m4.setElement(3,0,Real(3.0f));
+	m4.setElement(3,1,Real(1.0f));
+	std::cout << m3 << "\n*\n"<< m4 << "\n=" << std::endl;
+	std::cout << m3.multiply(m4)  << std::endl;
 	return 0;
 }
 

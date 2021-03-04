@@ -6,6 +6,8 @@
 #include <string>
 #include <sstream>
 
+#include "real.h"
+
 // matrix: A_ij
 // j=   1   2   3   4
 // i= 1|a11 a12 a13 a14| 
@@ -29,7 +31,7 @@ public:
 	}
 };
 
-template <class T = float>
+template <class T = Real>
 class Matrix {
 private:
 	unsigned height = 0;
@@ -85,16 +87,25 @@ public:
 	}
 
 
-	Matrix<T> multiply(Matrix<T>& m2) {
-		if (this->height != m2.height || this->width != m2.width)
+	Matrix<T> multiply(Matrix<T>& other) {
+		if (this->width != other.height)
 			throw invalid_size_exception(
-					this->height, this->width, m2.height, m2.width, "multiply");
-		Matrix<T> result(this->height,this->width);
+					this->height, this->width, other.height, other.width, "multiply");
+		Matrix<T> result(this->height,other.width);
+		for (unsigned i=0;i<this->height;i++) {
+			for (unsigned k=0;k<other.width;k++) {
+				T sum = T::null();
+				for (unsigned j=0;j<this->width;j++) {
+					sum = sum + (this->matrix[i][j]*other.matrix[j][k]);	
+				}
+				result.matrix[i][k] = sum;
+			}
+		}
 		return result;
 	}
 };
 
-template <class T=float>
+template <class T = Real>
 std::ostream& operator <<(std::ostream& stream, const Matrix<T>& m) {
 	for (unsigned i=0;i<m.getHeight();i++) {
 		stream << "|";
@@ -107,7 +118,7 @@ std::ostream& operator <<(std::ostream& stream, const Matrix<T>& m) {
 	return stream;
 }
 
-template <class T = float>
+template <class T = Real>
 Matrix<T> multiplyByScalar(const T& s, const Matrix<T>& m) {
 	Matrix<T> result(m.getHeight(), m.getWidth());
 	for (unsigned i=0;i<m.getHeight();i++) {
