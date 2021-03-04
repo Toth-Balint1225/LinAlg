@@ -64,6 +64,38 @@ int main() {
 	} catch (std::exception& ex) {
 		std::cout << ex.what() << std::endl;	
 	}
+	Matrix<Rational> m5(3,4);
+	m5.setElement(0,0,Rational(1,10));
+	m5.setElement(0,1,Rational(2,3));
+	m5.setElement(0,2,Rational(4,3));
+	m5.setElement(0,3,Rational(5,6));
+	m5.setElement(1,0,Rational(1,2));
+	m5.setElement(1,1,Rational(12,4));
+	m5.setElement(1,2,Rational(1,1));
+	m5.setElement(1,3,Rational(0,1));
+	m5.setElement(2,0,Rational(5,7));
+	m5.setElement(2,1,Rational(4,3));
+	m5.setElement(2,2,Rational(2,3));
+	m5.setElement(2,3,Rational(8,5));
+	Matrix<Rational> m6(4,2);
+	m6.setElement(0,0,Rational(6,7));
+	m6.setElement(0,1,Rational(4,6));
+	m6.setElement(1,0,Rational(9,4));
+	m6.setElement(1,1,Rational(11,2));
+	m6.setElement(2,0,Rational(20,3));
+	m6.setElement(2,1,Rational(1,2));
+	m6.setElement(3,0,Rational(4,5));
+	m6.setElement(3,1,Rational(6,6));
+	std::cout << m5 << "\n*\n"<< m6 << "\n=" << std::endl;
+	try {
+		std::cout << m5.multiply(m6)  << std::endl;
+		std::cout << m6.multiply(m5) << std::endl;
+	} catch (std::exception& ex) {
+		std::cout << ex.what() << std::endl;	
+	}
+	std::cout << (Real(1.2) + Real(9.4) * Real(2.3)) << std::endl;
+	std::cout << (Rational(1,2) + Rational(18,12)) << std::endl;
 	return 0;
+
 }
 

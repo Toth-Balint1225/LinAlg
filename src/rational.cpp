@@ -167,7 +167,7 @@ std::map<int,int> Rational::intersect(const std::map<int,int>& s1, const std::ma
 	for (auto it : s1) {
 		auto pos = s2.find(it.first); 
 		if (pos != s2.end()) {
-			toReturn[it.first] = (it.second < pos->second ? pos->second : it.second);
+			toReturn[it.first] = (it.second > pos->second ? pos->second : it.second);
 		}
 	}
 	return toReturn;
