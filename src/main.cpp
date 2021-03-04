@@ -59,6 +59,11 @@ int main() {
 	std::cout << m3.multiply(m4)  << std::endl;
 	std::cout << Matrix<Real>::unit(3) << std::endl << Matrix<Real>::null(3) << std::endl;
 	std::cout << Matrix<Rational>::unit(3) << std::endl << Matrix<Rational>::null(3) << std::endl;
+	try {
+		std::cout << m4.multiply(m3) << std::endl;
+	} catch (std::exception& ex) {
+		std::cout << ex.what() << std::endl;	
+	}
 	return 0;
 }
 

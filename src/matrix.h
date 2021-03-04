@@ -9,25 +9,24 @@
 #include "real.h"
 
 // matrix: A_ij
-// j=   1   2   3   4
-// i= 1|a11 a12 a13 a14| 
-//    2|a21 a22 a23 a24|
-//    3|a31 a32 a33 a34|
+// j=   0   1   2   3  
+// i= 0|a00 a01 a02 a03| 
+//    1|a10 a11 a12 a13|
+//    2|a20 a21 a22 a23|
 
 class invalid_size_exception : public std::exception {
 private:
-	int m1h, m1w, m2h, m2w;
-	std::string type;
+	std::string msg;
 public:
-	invalid_size_exception(int _m1h, int _m1w, int _m2h, int _m2w, const std::string& _type):
-		m1h(_m1h), m1w(_m1w), m2h(_m2h), m2w(_m2w), type(_type) {
-	}
-	~invalid_size_exception() override = default;
-	const char* what() const noexcept override {
+	invalid_size_exception(int m1h, int m1w, int m2h, int m2w, const std::string& type) {
 		std::stringstream ss;
 		ss << "CANNOT "<< type << " matrix [" << m1h << ";" << m1w << "]"
 		   << " to " <<" matrix [" << m2h << ";" << m2w << "]";
-		return ss.str().c_str();
+		msg = ss.str();
+	}
+	~invalid_size_exception() override = default;
+	virtual const char* what() const noexcept override {
+		return msg.c_str();
 	}
 };
 
