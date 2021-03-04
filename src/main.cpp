@@ -32,6 +32,7 @@ int main() {
 	m2->setElement(1,1,r1);
 	m2->setElement(1,2,r4);
 	std::cout << *m2 << std::endl;
+	std::cout << *m2 << "+\n" << *m2 << "=\n" << m2->add(*m2) << std::endl;
 	delete m2;
 	std::cout << std::endl;
 	return 0;
