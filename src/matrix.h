@@ -24,7 +24,7 @@ public:
 	const char* what() const noexcept override {
 		std::stringstream ss;
 		ss << "CANNOT "<< type << " matrix [" << m1h << ";" << m1w << "]"
-		   << " to " <<" matrix [" << m1h << ";" << m1w << "]";
+		   << " to " <<" matrix [" << m2h << ";" << m2w << "]";
 		return ss.str().c_str();
 	}
 };
@@ -73,7 +73,8 @@ public:
 
 	Matrix<T> add(Matrix<T>& m2) {
 		if (this->height != m2.height || this->width != m2.width)
-			throw invalid_size_exception(this->height, this->width, m2.height, m2.width, "add");
+			throw invalid_size_exception(
+					this->height, this->width, m2.height, m2.width, "add");
 		Matrix<T> result(this->height,this->width);
 		for (unsigned i=0;i<result.height;i++) {
 			for (unsigned j=0;j<result.width;j++) {
@@ -83,6 +84,14 @@ public:
 		return result;
 	}
 
+
+	Matrix<T> multiply(Matrix<T>& m2) {
+		if (this->height != m2.height || this->width != m2.width)
+			throw invalid_size_exception(
+					this->height, this->width, m2.height, m2.width, "multiply");
+		Matrix<T> result(this->height,this->width);
+		return result;
+	}
 };
 
 template <class T=float>
@@ -96,6 +105,17 @@ std::ostream& operator <<(std::ostream& stream, const Matrix<T>& m) {
 		stream << std::endl;
 	}
 	return stream;
+}
+
+template <class T = float>
+Matrix<T> multiplyByScalar(const T& s, const Matrix<T>& m) {
+	Matrix<T> result(m.getHeight(), m.getWidth());
+	for (unsigned i=0;i<m.getHeight();i++) {
+		for (unsigned j=0;j<m.getWidth();j++) {
+			result.setElement(i,j,s*m.getElement(i,j));
+		}
+	}
+	return result;
 }
 
 #endif //MATRIX_H

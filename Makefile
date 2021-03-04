@@ -10,7 +10,7 @@ source_dir := src
 #######manual input######################
 target := LinAlg
 #debug mode
-CFLAGS += -g
+#CFLAGS += -g
 #enable multithread
 #CFLAGS += -pthread
 #enable gtkmm

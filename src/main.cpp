@@ -33,6 +33,7 @@ int main() {
 	m2->setElement(1,2,r4);
 	std::cout << *m2 << std::endl;
 	std::cout << *m2 << "+\n" << *m2 << "=\n" << m2->add(*m2) << std::endl;
+	std::cout << "2\n*\n" << *m2 << "=\n" << multiplyByScalar(Rational(2,1),*m2);
 	delete m2;
 	std::cout << std::endl;
 	return 0;

@@ -17,7 +17,7 @@ Rational::~Rational() {
 }
 
 
-Rational Rational::addTo(Rational& other) {
+Rational Rational::addTo(const Rational& other) const {
 	int common = lcm(this->denominator,other.denominator);	
 	Rational toReturn(this->numerator*((int)common/this->denominator) 
 			+ other.numerator*((int)common/other.denominator)
@@ -26,48 +26,48 @@ Rational Rational::addTo(Rational& other) {
 	return toReturn;
 }
 
-Rational Rational::subtract(Rational& other) {
+Rational Rational::subtract(const Rational& other) const {
 	Rational negated(other.negate());
 	return addTo(negated);
 }
 
-Rational Rational::negate() {
+Rational Rational::negate() const {
 	return Rational(-numerator, denominator);
 }
 
-Rational Rational::invert() {
+Rational Rational::invert() const {
 	return Rational(denominator, numerator);
 }
 
-Rational Rational::multiplyBy(Rational& other) {
+Rational Rational::multiplyBy(const Rational& other) const {
 	Rational toReturn(this->numerator*other.numerator, this->denominator*other.denominator);
 	toReturn.simplify();
 	return toReturn;
 }
 
-Rational Rational::divideBy(Rational& other) {
+Rational Rational::divideBy(const Rational& other) const {
 	Rational inverted(other.invert());
 	return multiplyBy(inverted);
 }
 
-Rational Rational::operator +(Rational& other) {
+Rational Rational::operator +(const Rational& other) const {
 	return addTo(other);
 }
 
-Rational Rational::operator -(Rational& other) {
+Rational Rational::operator -(const Rational& other) const {
 	return subtract(other);
 }
 
-Rational Rational::operator *(Rational& other) {
+Rational Rational::operator *(const Rational& other) const {
 	return multiplyBy(other);
 }
 
-Rational Rational::operator /(Rational& other) {
+Rational Rational::operator /(const Rational& other) const {
 	return divideBy(other);
 }
 
 
-bool Rational::operator <=(const Rational& other) {
+bool Rational::operator <=(const Rational& other) const {
 	int common = lcm(this->denominator,other.denominator);
 	return (this->numerator*((int)common/this->denominator)) <= (other.numerator*((int)common/other.denominator));
 }
@@ -82,7 +82,7 @@ void Rational::simplify() {
 	denominator = (int)denominator/gcd_v;
 }
 
-int Rational::gcd(int a, int b) {
+int Rational::gcd(int a, int b) const {
 	int toReturn = 0;
 	try {
 		toReturn = mapsum(intersect(factorize(a),factorize(b)));
@@ -92,7 +92,7 @@ int Rational::gcd(int a, int b) {
 	return toReturn;
 }
 
-int Rational::lcm(int a, int b) {
+int Rational::lcm(int a, int b) const {
 	int toReturn = 0;
 	try {
 		toReturn = mapsum(unionof(factorize(a),factorize(b)));
@@ -102,7 +102,7 @@ int Rational::lcm(int a, int b) {
 	return toReturn;
 }
 
-int Rational::mapsum(std::map<int,int> m) {
+int Rational::mapsum(std::map<int,int> m) const {
 	int sum = 1;
 	for (auto it : m) {
 		sum *= (it.first * it.second);
@@ -110,7 +110,7 @@ int Rational::mapsum(std::map<int,int> m) {
 	return sum;
 }
 
-std::map<int,int> Rational::factorize(int num) {
+std::map<int,int> Rational::factorize(int num) const {
 	std::map<int,int> toReturn;
 	//#stolen
 	if (num == 1) {
@@ -140,7 +140,7 @@ std::map<int,int> Rational::factorize(int num) {
 	return toReturn;
 }
 
-std::map<int,int> Rational::unionof(const std::map<int,int>& s1, const std::map<int,int>& s2) {
+std::map<int,int> Rational::unionof(const std::map<int,int>& s1, const std::map<int,int>& s2) const {
 	std::map<int,int> toReturn;
 	for (auto it : s1) {
 		toReturn[it.first] = it.second;
@@ -155,7 +155,7 @@ std::map<int,int> Rational::unionof(const std::map<int,int>& s1, const std::map<
 	return toReturn;
 }
 
-std::map<int,int> Rational::intersect(const std::map<int,int>& s1, const std::map<int,int>& s2) {
+std::map<int,int> Rational::intersect(const std::map<int,int>& s1, const std::map<int,int>& s2) const {
 	std::map<int,int> toReturn;
 	for (auto it : s1) {
 		auto pos = s2.find(it.first); 
@@ -173,7 +173,7 @@ std::ostream& operator <<(std::ostream& stream, const Rational& toDisp) {
 	return stream;
 }
 
-Rational Rational::operator =(Rational other) {
+Rational Rational::operator =(const Rational& other) {
 	if (this != &other) {
 		this->numerator = other.numerator;
 		this->denominator = other.denominator;

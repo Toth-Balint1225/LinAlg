@@ -16,12 +16,12 @@ private:
 		}
 	};
 private:
-	int gcd(int a, int b);  // the greatest common denominator
-	int lcm(int a, int b);  // ghe littlest common multiplier
-	int mapsum(std::map<int,int> m);
-	std::map<int,int> factorize(int num);
-	std::map<int,int> unionof(const std::map<int,int>& s1, const std::map<int,int>& s2);
-	std::map<int,int> intersect(const std::map<int,int>& s1, const std::map<int,int>& s2);
+	int gcd(int a, int b) const;  // the greatest common denominator
+	int lcm(int a, int b) const;  // ghe littlest common multiplier
+	int mapsum(std::map<int,int> m) const;
+	std::map<int,int> factorize(int num) const;
+	std::map<int,int> unionof(const std::map<int,int>& s1, const std::map<int,int>& s2) const;
+	std::map<int,int> intersect(const std::map<int,int>& s1, const std::map<int,int>& s2) const;
 public:
 	Rational();
 	Rational (int _numerator, int _denominator);
@@ -29,24 +29,24 @@ public:
 	~Rational();
 
 	// basic operations
-	Rational addTo(Rational& other);
-	Rational subtract(Rational& other);
-	Rational negate();
-	Rational invert();
-	Rational multiplyBy(Rational& other);
-	Rational divideBy(Rational& other);
+	Rational addTo(const Rational& other) const;
+	Rational subtract(const Rational& other) const;
+	Rational negate() const;
+	Rational invert() const;
+	Rational multiplyBy(const Rational& other) const;
+	Rational divideBy(const Rational& other) const;
 
 	float toFloat() const;
 	void simplify();
 
 	//operators
-	Rational operator +(Rational& other);
-	Rational operator -(Rational& other);
-	Rational operator *(Rational& other);
-	Rational operator /(Rational& other);
-	Rational operator =(Rational other);
+	Rational operator +(const Rational& other) const;
+	Rational operator -(const Rational& other) const;
+	Rational operator *(const Rational& other) const;
+	Rational operator /(const Rational& other) const;
+	Rational operator =(const Rational& other);
 
-	bool operator <=(const Rational& other);
+	bool operator <=(const Rational& other) const;
 
 	friend std::ostream& operator <<(std::ostream& stream, const Rational& toDisp);
 };
