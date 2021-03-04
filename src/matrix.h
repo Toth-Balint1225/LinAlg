@@ -46,6 +46,18 @@ public:
 			matrix[i] = new T[width];
 	}
 
+	Matrix(const Matrix& other):
+			height(other.height), width(other.width) {
+		matrix = new T*[height];
+		for (unsigned i=0;i<height;i++)
+			matrix[i] = new T[width];
+		for (unsigned i=0;i<height;i++) {
+			for (unsigned j=0;j<width;j++) {
+				this->matrix[i][j] = other.matrix[i][j];
+			}
+		}
+	}
+
 	~Matrix() {
 		for (unsigned i=0;i<height;i++)
 			delete [] matrix[i];
@@ -130,6 +142,25 @@ public:
 	}
 	Matrix<T> operator *(const Matrix<T>& other) const {
 		return multiply(other);
+	}
+
+	Matrix<T> operator =(const Matrix<T>& other) {
+		if (this != &other) {
+			for (unsigned i=0;i<height;i++)
+				delete [] matrix[i];
+			delete [] matrix;
+			this->height = other.height;
+			this->width = other.width;
+			matrix = new T*[height];
+			for (unsigned i=0;i<height;i++)
+				matrix[i] = new T[width];
+			for (unsigned i=0;i<height;i++) {
+				for (unsigned j=0;j<width;j++) {
+					this->matrix[i][j] = other.matrix[i][j];
+				}
+			}
+		}
+		return *this;
 	}
 
 };

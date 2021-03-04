@@ -57,8 +57,8 @@ int main() {
 	m4.setElement(3,1,Real(1.0f));
 	std::cout << m3 << "\n*\n"<< m4 << "\n=" << std::endl;
 	std::cout << m3.multiply(m4)  << std::endl;
-	std::cout << Matrix<Real>::unit(3) << std::endl << Matrix<Real>::null(3) << std::endl;
-	std::cout << Matrix<Rational>::unit(3) << std::endl << Matrix<Rational>::null(3) << std::endl;
+	std::cout << Matrix<Real>::unit(3) << std::endl << Matrix<Real>::null(4) << std::endl;
+	std::cout << Matrix<Rational>::unit(3) << std::endl << Matrix<Rational>::null(4) << std::endl;
 	try {
 		std::cout << m4.multiply(m3) << std::endl;
 	} catch (std::exception& ex) {
@@ -95,6 +95,12 @@ int main() {
 	}
 	std::cout << (Real(1.2) + Real(9.4) * Real(2.3)) << std::endl;
 	std::cout << (Rational(1,2) + Rational(18,12)) << std::endl;
+
+	Matrix<Rational> uj = m5;
+	std::cout << uj << std::endl;
+	uj = m6;
+	std::cout << uj << std::endl;
+
 	return 0;
 
 }
