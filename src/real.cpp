@@ -1,4 +1,5 @@
 #include "real.h"
+#include <cmath>
 
 Real::Real():
 	value(0.0f){
@@ -18,6 +19,13 @@ Real Real::null() {
 
 Real Real::unit() {
 	return Real(1.0f);
+}
+
+Real Real::negate() const {
+	return Real(-1.0f * value);
+}
+Real Real::invert() const {
+	return Real(1.0f / value);
 }
 
 Real Real::operator +(const Real& other) const {
@@ -47,6 +55,9 @@ bool Real::operator <=(const Real& other) const {
 	return this->value <= other.value;
 }
 
+Real Real::power(unsigned e) const {
+	return Real(pow(value,e));
+}
 
 std::ostream& operator <<(std::ostream& stream, const Real& r) {
 	stream << r.value;

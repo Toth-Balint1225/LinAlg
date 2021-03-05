@@ -51,6 +51,8 @@ public:
 
 	bool operator <=(const Rational& other) const;
 
+	Rational power(unsigned e) const;
+
 	friend std::ostream& operator <<(std::ostream& stream, const Rational& toDisp);
 };
 

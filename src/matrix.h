@@ -20,11 +20,26 @@ private:
 public:
 	invalid_size_exception(int m1h, int m1w, int m2h, int m2w, const std::string& type) {
 		std::stringstream ss;
-		ss << "CANNOT "<< type << " matrix [" << m1h << ";" << m1w << "]"
-		   << " to " <<" matrix [" << m2h << ";" << m2w << "]";
+		ss << "ERROR cannot "<< type << " matrix [" << m1h << ";" << m1w << "]"
+			<< " to " <<" matrix [" << m2h << ";" << m2w << "]";
 		msg = ss.str();
 	}
 	~invalid_size_exception() override = default;
+	virtual const char* what() const noexcept override {
+		return msg.c_str();
+	}
+};
+
+class not_square_exception : public std::exception {
+private:
+	std::string msg;
+public:
+	not_square_exception(int h,int w, const std::string& type) {
+		std::stringstream ss;
+		ss << "ERROR cannot calculate " << type << " of matrix ["
+			<< h << ";" << w << "]";
+		msg = ss.str();
+	}
 	virtual const char* what() const noexcept override {
 		return msg.c_str();
 	}
@@ -71,7 +86,7 @@ public:
 	unsigned getWidth() const {
 		return width;
 	}
-	
+
 	void setElement(unsigned i, unsigned j,const T& data) {
 		matrix[i][j] = data;
 	}
@@ -162,6 +177,43 @@ public:
 		}
 		return *this;
 	}
+
+	Matrix<T> submatrix(unsigned row, unsigned column) const {
+		Matrix<T> result(height-1,width-1);
+		unsigned rowCorrect = 0;
+		for (unsigned i=0;i<this->height;i++) {
+			if (i == row) {
+				rowCorrect = 1;
+			} else {
+				unsigned colCorrect = 0;
+				for (unsigned j=0;j<this->width;j++) {
+					if (j == column) {
+						colCorrect = 1;
+					} else {
+						result.matrix[i-rowCorrect][j-colCorrect] = 
+							this->matrix[i][j];
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	T det() const {
+		if (height != width) {
+			throw not_square_exception(height,width,"determinant");
+		}
+		if (this->height == 1) {
+			return this->matrix[0][0];
+		} else {
+			T sum = T::null();
+			for (unsigned column=0;column<this->width;column++) {
+				sum = sum + T::unit().negate().power(column) * this->matrix[0][column] * this->submatrix(0,column).det();
+			}
+			return sum;
+		}
+	}
+
 
 };
 

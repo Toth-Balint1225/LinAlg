@@ -15,6 +15,9 @@ public:
 	static Real null();
 	static Real unit();
 
+	Real negate() const;
+	Real invert() const;
+
 	Real operator +(const Real& other) const;
 	Real operator -(const Real& other) const;
 	Real operator *(const Real& other) const;
@@ -22,6 +25,8 @@ public:
 	Real operator =(const Real& other);
 
 	bool operator <=(const Real& other) const;
+
+	Real power(unsigned e) const;
 
 	friend std::ostream& operator <<(std::ostream& stream, const Real& r);
 };

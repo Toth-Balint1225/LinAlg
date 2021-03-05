@@ -101,6 +101,34 @@ int main() {
 	uj = m6;
 	std::cout << uj << std::endl;
 
+	std::cout << std::endl;
+	std::cout << m5 << std::endl << m5.submatrix(0,0) << std::endl;
+
+	Matrix detm(3,3);
+	detm.setElement(0,0,Real(1.0f));
+	detm.setElement(0,1,Real(3.0f));
+	detm.setElement(0,2,Real(4.0f));
+	detm.setElement(1,0,Real(2.0f));
+	detm.setElement(1,1,Real(1.0f));
+	detm.setElement(1,2,Real(0.0f));
+	detm.setElement(2,0,Real(6.0f));
+	detm.setElement(2,1,Real(2.0f));
+	detm.setElement(2,2,Real(1.0f));
+
+	Matrix<Rational> detm2(3,3);
+	detm2.setElement(0,0,Rational(1,1));
+	detm2.setElement(0,1,Rational(3,1));
+	detm2.setElement(0,2,Rational(4,1));
+	detm2.setElement(1,0,Rational(2,1));
+	detm2.setElement(1,1,Rational(1,1));
+	detm2.setElement(1,2,Rational(0,1));
+	detm2.setElement(2,0,Rational(6,1));
+	detm2.setElement(2,1,Rational(2,1));
+	detm2.setElement(2,2,Rational(1,1));
+
+	std::cout << "det\n" << detm << std::endl << "=" << detm.det() << std::endl;
+	std::cout << "det\n" << detm2 << std::endl << "=" << detm2.det() << std::endl;
+
 	return 0;
 
 }

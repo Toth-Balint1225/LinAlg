@@ -1,5 +1,6 @@
 #include "rational.h"
 #include <algorithm>
+#include <cmath>
 
 Rational::Rational():
 	numerator(0), denominator(1) {
@@ -77,6 +78,10 @@ Rational Rational::operator /(const Rational& other) const {
 bool Rational::operator <=(const Rational& other) const {
 	int common = lcm(this->denominator,other.denominator);
 	return (this->numerator*((int)common/this->denominator)) <= (other.numerator*((int)common/other.denominator));
+}
+
+Rational Rational::power(unsigned e) const {
+	return Rational (pow(numerator,e),pow(denominator,e));
 }
 
 float Rational::toFloat() const {
