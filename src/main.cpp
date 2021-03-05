@@ -126,8 +126,25 @@ int main() {
 	detm2.setElement(2,1,Rational(2,1));
 	detm2.setElement(2,2,Rational(1,1));
 
+	Matrix<Rational> adju(3,3);
+	adju.setElement(0,0,Rational(3,1));
+	adju.setElement(0,1,Rational(2,1));
+	adju.setElement(0,2,Rational(1,1));
+	adju.setElement(1,0,Rational(4,1));
+	adju.setElement(1,1,Rational(3,1));
+	adju.setElement(1,2,Rational(1,1));
+	adju.setElement(2,0,Rational(3,1));
+	adju.setElement(2,1,Rational(4,1));
+	adju.setElement(2,2,Rational(1,1));
+
 	std::cout << "det\n" << detm << std::endl << "=" << detm.det() << std::endl;
 	std::cout << "det\n" << detm2 << std::endl << "=" << detm2.det() << std::endl;
+
+	Matrix<Rational> inverted = adju.invert();
+	Matrix<Rational> adjungated = adju.adj();
+	std::cout << "\nadjungated:\n" << adjungated << std::endl;
+	std::cout << "\ninverted:\n" << inverted << std::endl;
+	std::cout << "\ncheck:\n" << (adju*inverted) << std::endl;
 
 	return 0;
 

@@ -180,7 +180,7 @@ std::map<int,int> Rational::intersect(const std::map<int,int>& s1, const std::ma
 
 std::ostream& operator <<(std::ostream& stream, const Rational& toDisp) {
 	stream << toDisp.numerator;
-	if (toDisp.denominator != 1)
+	if (toDisp.denominator != 1 && toDisp.numerator != 0)
 		stream << "/" << toDisp.denominator;
 	return stream;
 }

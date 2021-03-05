@@ -214,6 +214,29 @@ public:
 		}
 	}
 
+	Matrix<T> adj() const {
+		if (height != width) {
+			throw not_square_exception(height,width,"determinant");
+		}
+		Matrix<T> result(this->height, this->width);
+		for (unsigned i=0;i<this->height;i++) {
+			for (unsigned j=0;j<this->width;j++) {
+				result.matrix[i][j] = T::unit().negate().power(i+j)*this->submatrix(j,i).det();
+			}
+		}
+		return result;
+	}
+
+	Matrix<T> invert() const {
+		if (height != width) {
+			throw not_square_exception(height,width,"determinant");
+		}
+		Matrix<T> result(this->height, this->width);
+		T coefficient = this->det().invert();
+		result = coefficient * this->adj();
+		return result;
+	}
+
 
 };
 
