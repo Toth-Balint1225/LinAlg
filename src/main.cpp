@@ -1,11 +1,31 @@
 #include <iostream>
-#include "rational.h" 
+#include "rational.h"
 #include "matrix.h"
 #include "real.h"
+#include "transformer.h"
 // scope:
 // - vector operations (override operators)
 // - matrix operatons
 // - base transformation!
+
+class SimpleIO : public TransformerIO {
+public:
+	virtual ~SimpleIO() override = default; 
+	std::pair<unsigned, unsigned> getGen() const override {
+		unsigned row, col;
+		std::cout << "generator row: ";
+		std::cin >> row;
+		std::cout << "generator column: ";
+		std::cin >> col;
+		return std::pair<unsigned,unsigned>(row,col);
+	}
+	virtual bool isFinished() const override {
+		bool result = false;
+		std::cout << "Finished? [1/0] : ";
+		std::cin >> result;
+		return result;
+	}
+};
 
 int main() {
 	std::cout << "Hello World" << std::endl;
@@ -62,7 +82,7 @@ int main() {
 	try {
 		std::cout << m4.multiply(m3) << std::endl;
 	} catch (std::exception& ex) {
-		std::cout << ex.what() << std::endl;	
+		std::cout << ex.what() << std::endl;
 	}
 	Matrix<Rational> m5(3,4);
 	m5.setElement(0,0,Rational(1,10));
@@ -91,7 +111,7 @@ int main() {
 		std::cout << m5 * m6  << std::endl;
 		std::cout << m6 * m5 << std::endl;
 	} catch (std::exception& ex) {
-		std::cout << ex.what() << std::endl;	
+		std::cout << ex.what() << std::endl;
 	}
 	std::cout << (Real(1.2) + Real(9.4) * Real(2.3)) << std::endl;
 	std::cout << (Rational(1,2) + Rational(18,12)) << std::endl;
@@ -146,7 +166,45 @@ int main() {
 	std::cout << "\ninverted:\n" << inverted << std::endl;
 	std::cout << "\ncheck:\n" << (adju*inverted) << std::endl;
 
+	try {
+		std::cout << m4.det() << std::endl;
+	} catch (std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
+
+	try {
+		std::cout << m4.adj() << std::endl;
+	} catch (std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
+
+	try {
+		std::cout << m4.adj() << std::endl;
+	} catch (std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
+
+	Matrix<Rational> toTransform(3,4);
+	toTransform.setElement(0,0,Rational(1,1));
+	toTransform.setElement(0,1,Rational(2,1));
+	toTransform.setElement(0,2,Rational(3,1));
+	toTransform.setElement(0,3,Rational(14,1));
+	toTransform.setElement(1,0,Rational(3,1));
+	toTransform.setElement(1,1,Rational(1,1));
+	toTransform.setElement(1,2,Rational(4,1));
+	toTransform.setElement(1,3,Rational(17,1));
+	toTransform.setElement(2,0,Rational(2,1));
+	toTransform.setElement(2,1,Rational(5,1));
+	toTransform.setElement(2,2,Rational(2,1));
+	toTransform.setElement(2,3,Rational(18,1));
+
+	TransformerIO* simple = new SimpleIO;
+	Transformer<Rational> t = 
+		Transformer<Rational>::TransformerBuilder<Rational>(toTransform)
+		.setInteractive(simple)
+		.setVerbose()
+		.build();
+	t.transform();
 	return 0;
 
 }
-

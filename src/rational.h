@@ -50,6 +50,7 @@ public:
 	Rational operator =(const Rational& other);
 
 	bool operator <=(const Rational& other) const;
+	bool operator ==(const Rational& other) const;
 
 	Rational power(unsigned e) const;
 

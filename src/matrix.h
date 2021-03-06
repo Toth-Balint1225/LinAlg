@@ -9,8 +9,8 @@
 #include "real.h"
 
 // matrix: A_ij
-// j=   0   1   2   3  
-// i= 0|a00 a01 a02 a03| 
+// j=   0   1   2   3
+// i= 0|a00 a01 a02 a03|
 //    1|a10 a11 a12 a13|
 //    2|a20 a21 a22 a23|
 
@@ -142,7 +142,7 @@ public:
 			for (unsigned k=0;k<other.width;k++) {
 				T sum = T::null();
 				for (unsigned j=0;j<this->width;j++) {
-					sum = sum + (this->matrix[i][j]*other.matrix[j][k]);	
+					sum = sum + (this->matrix[i][j]*other.matrix[j][k]);
 				}
 				result.matrix[i][k] = sum;
 			}
@@ -190,7 +190,7 @@ public:
 					if (j == column) {
 						colCorrect = 1;
 					} else {
-						result.matrix[i-rowCorrect][j-colCorrect] = 
+						result.matrix[i-rowCorrect][j-colCorrect] =
 							this->matrix[i][j];
 					}
 				}

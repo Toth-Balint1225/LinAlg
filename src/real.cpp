@@ -55,6 +55,10 @@ bool Real::operator <=(const Real& other) const {
 	return this->value <= other.value;
 }
 
+bool Real::operator ==(const Real& other) const {
+	return (*this <= other) && (other <= *this);
+}
+
 Real Real::power(unsigned e) const {
 	return Real(pow(value,e));
 }

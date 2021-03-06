@@ -26,8 +26,8 @@ Rational Rational::unit() {
 }
 
 Rational Rational::addTo(const Rational& other) const {
-	int common = lcm(this->denominator,other.denominator);	
-	Rational toReturn(this->numerator*((int)common/this->denominator) 
+	int common = lcm(this->denominator,other.denominator);
+	Rational toReturn(this->numerator*((int)common/this->denominator)
 			+ other.numerator*((int)common/other.denominator)
 			, common);
 	toReturn.simplify();
@@ -80,6 +80,11 @@ bool Rational::operator <=(const Rational& other) const {
 	return (this->numerator*((int)common/this->denominator)) <= (other.numerator*((int)common/other.denominator));
 }
 
+bool Rational::operator ==(const Rational& other) const {
+	int common = lcm(this->denominator,other.denominator);
+	return (this->numerator*((int)common/this->denominator)) == (other.numerator*((int)common/other.denominator));
+}
+
 Rational Rational::power(unsigned e) const {
 	return Rational (pow(numerator,e),pow(denominator,e));
 }
@@ -89,7 +94,11 @@ float Rational::toFloat() const {
 }
 
 void Rational::simplify() {
-	int gcd_v = gcd(numerator,denominator);	
+	if (numerator < 0 && denominator < 0) {
+		numerator *= -1;
+		denominator *= -1;
+	}
+	int gcd_v = gcd(numerator,denominator);
 	numerator  = (int)numerator/gcd_v;
 	denominator = (int)denominator/gcd_v;
 }
@@ -109,7 +118,7 @@ int Rational::lcm(int a, int b) const {
 	try {
 		toReturn = mapsum(unionof(factorize(a),factorize(b)));
 	} catch (std::exception& ex) {
-		toReturn = (a>b?a:b);	
+		toReturn = (a>b?a:b);
 	}
 	return toReturn;
 }
@@ -146,9 +155,9 @@ std::map<int,int> Rational::factorize(int num) const {
                  }
              }
              num /= i;  // szám osztása az előállított prímszámmal
-			 toReturn[i]++;
+			toReturn[i]++;
         }
-    } 
+    }
 	return toReturn;
 }
 
@@ -170,7 +179,7 @@ std::map<int,int> Rational::unionof(const std::map<int,int>& s1, const std::map<
 std::map<int,int> Rational::intersect(const std::map<int,int>& s1, const std::map<int,int>& s2) const {
 	std::map<int,int> toReturn;
 	for (auto it : s1) {
-		auto pos = s2.find(it.first); 
+		auto pos = s2.find(it.first);
 		if (pos != s2.end()) {
 			toReturn[it.first] = (it.second > pos->second ? pos->second : it.second);
 		}

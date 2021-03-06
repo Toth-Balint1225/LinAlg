@@ -25,6 +25,7 @@ public:
 	Real operator =(const Real& other);
 
 	bool operator <=(const Real& other) const;
+	bool operator ==(const Real& other) const;
 
 	Real power(unsigned e) const;
 
