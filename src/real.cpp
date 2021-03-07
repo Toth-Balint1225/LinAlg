@@ -12,6 +12,10 @@ Real::Real(double _value):
 Real::~Real() {
 }
 
+void Real::setInteractive() {
+	std::cout << "value: ";
+	std::cin >> value;
+}
 
 Real Real::null() {
 	return Real(0.0f);

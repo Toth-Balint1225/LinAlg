@@ -199,7 +199,7 @@ int main() {
 	toTransform.setElement(2,2,Rational(2,1));
 	toTransform.setElement(2,3,Rational(18,1));
 */
-
+/*
 	Matrix<Rational> toTransform(3,4);
 	toTransform.setElement(0,0,{1,1});
 	toTransform.setElement(0,1,{2,1});
@@ -213,6 +213,9 @@ int main() {
 	toTransform.setElement(2,1,{5,1});
 	toTransform.setElement(2,2,{2,1});
 	toTransform.setElement(2,3,{18,1});
+*/
+	Matrix<Rational> toTransform(4,8);
+	toTransform.setInteractive();
 	//std::stringstream transformerstream;
 	//std::ofstream fileout;
 	//fileout.open("transform_output.txt",std::ios_base::app);

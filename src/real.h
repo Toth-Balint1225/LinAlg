@@ -1,7 +1,7 @@
 #ifndef REAL_H
 #define REAL_H
 
-#include <ostream>
+#include <iostream>
 
 // a wrapper class for double
 class Real {
@@ -11,6 +11,8 @@ public:
 	Real();
 	Real(double _value);
 	~Real();
+
+	void setInteractive();
 
 	static Real null();
 	static Real unit();

@@ -17,6 +17,13 @@ Rational::Rational (const Rational& other):
 Rational::~Rational() {
 }
 
+void Rational::setInteractive() {
+	std::cout << "numerator: ";
+	std::cin >> numerator;
+	std::cout << "denominator: ";
+	std::cin >> denominator;
+}
+
 Rational Rational::null() {
 	return Rational(0,1);
 }

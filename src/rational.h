@@ -28,6 +28,8 @@ public:
 	Rational (const Rational& other);
 	~Rational();
 
+	void setInteractive();
+
 	static Rational null();
 	static Rational unit();
 

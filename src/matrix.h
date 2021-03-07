@@ -1,7 +1,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include <ostream>
+#include <iostream>
 #include <exception>
 #include <string>
 #include <sstream>
@@ -77,6 +77,16 @@ public:
 		for (unsigned i=0;i<height;i++)
 			delete [] matrix[i];
 		delete [] matrix;
+	}
+
+	void setInteractive() {
+		for (unsigned i=0;i<height;i++) {
+			for (unsigned j=0;j<width;j++) {
+				std::cout << "(" << i << ","<< j << ")" << std::endl;
+				matrix[i][j].setInteractive();
+			}
+			std::cout << *this << std::endl;
+		}
 	}
 
 	unsigned getHeight() const {
