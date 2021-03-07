@@ -1,5 +1,4 @@
 #include "real.h"
-#include <cmath>
 
 Real::Real():
 	value(0.0f){
@@ -10,6 +9,10 @@ Real::Real(double _value):
 }
 
 Real::~Real() {
+}
+
+Real::Real(const std::string& str) {
+	value = String::strToNum<double>(str);
 }
 
 void Real::setInteractive() {
@@ -70,4 +73,9 @@ Real Real::power(unsigned e) const {
 std::ostream& operator <<(std::ostream& stream, const Real& r) {
 	stream << r.value;
 	return stream;
+}
+
+std::string Real::toFileFormat() const {
+	std::string result = String::numToStr<double>(value);
+	return result;
 }

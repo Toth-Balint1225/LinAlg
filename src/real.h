@@ -2,6 +2,9 @@
 #define REAL_H
 
 #include <iostream>
+#include <cmath>
+#include "stringhandler.h"
+#include <string>
 
 // a wrapper class for double
 class Real {
@@ -10,6 +13,7 @@ private:
 public:
 	Real();
 	Real(double _value);
+	Real(const std::string& str);
 	~Real();
 
 	void setInteractive();
@@ -32,6 +36,7 @@ public:
 	Real power(unsigned e) const;
 
 	friend std::ostream& operator <<(std::ostream& stream, const Real& r);
+	std::string toFileFormat() const;
 };
 
 std::ostream& operator <<(std::ostream& stream, const Real& r);

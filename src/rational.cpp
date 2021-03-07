@@ -1,17 +1,21 @@
 #include "rational.h"
-#include <algorithm>
-#include <cmath>
 
 Rational::Rational():
 	numerator(0), denominator(1) {
 }
 
-Rational::Rational (int _numerator, int _denominator):
+Rational::Rational(int _numerator, int _denominator):
 	numerator(_numerator), denominator(_denominator) {
 }
 
-Rational::Rational (const Rational& other):
+Rational::Rational(const Rational& other):
 	numerator(other.numerator), denominator(other.denominator) {
+}
+
+Rational::Rational(const std::string& str) {
+	std::list<std::string> components = String::split(str,',');
+	numerator = String::strToNum<int>(components.front());
+	denominator = String::strToNum<int>(components.back());
 }
 
 Rational::~Rational() {
@@ -199,6 +203,12 @@ std::ostream& operator <<(std::ostream& stream, const Rational& toDisp) {
 	if (toDisp.denominator != 1 && toDisp.numerator != 0)
 		stream << "/" << toDisp.denominator;
 	return stream;
+}
+
+std::string Rational::toFileFormat() const {
+	std::stringstream ss;
+	ss << numerator << "," << denominator;
+	return ss.str();
 }
 
 Rational Rational::operator =(const Rational& other) {

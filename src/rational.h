@@ -2,8 +2,14 @@
 #define RATIONAL_H
 
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <map>
 #include <exception>
+#include <algorithm>
+#include <cmath>
+#include "stringhandler.h"
+#include <list>
 
 class Rational {
 private:
@@ -24,8 +30,9 @@ private:
 	std::map<int,int> intersect(const std::map<int,int>& s1, const std::map<int,int>& s2) const;
 public:
 	Rational();
-	Rational (int _numerator, int _denominator);
-	Rational (const Rational& other);
+	Rational(int _numerator, int _denominator);
+	Rational(const Rational& other);
+	Rational(const std::string& str);
 	~Rational();
 
 	void setInteractive();
@@ -57,6 +64,7 @@ public:
 	Rational power(unsigned e) const;
 
 	friend std::ostream& operator <<(std::ostream& stream, const Rational& toDisp);
+	std::string toFileFormat() const;
 };
 
 std::ostream& operator <<(std::ostream& stream, const Rational& toDisp);

@@ -213,7 +213,7 @@ int main() {
 	toTransform.setElement(2,1,{5,1});
 	toTransform.setElement(2,2,{2,1});
 	toTransform.setElement(2,3,{18,1});
-*/
+
 	Matrix<Rational> toTransform(4,8);
 	toTransform.setInteractive();
 	//std::stringstream transformerstream;
@@ -226,8 +226,39 @@ int main() {
 		.setVerbose(&std::cout)
 		.build();
 	t.transform();
+*/
 	//fileout.close();
 	//std::cout << transformerstream.str() << std::endl;
+
+
+	Matrix<Rational> toExport1(2,3);
+	toExport1.setElement(0,0,{1,1});
+	toExport1.setElement(0,1,{2,1});
+	toExport1.setElement(0,2,{3,1});
+	toExport1.setElement(1,0,{3,1});
+	toExport1.setElement(1,1,{2,1});
+	toExport1.setElement(1,2,{1,1});
+
+	toExport1.exportToFile("matrix1.csv");
+
+	Matrix toExport2(3,2);
+	toExport2.setElement(0,0,{1});
+	toExport2.setElement(0,1,{2});
+	toExport2.setElement(1,0,{3});
+	toExport2.setElement(1,1,{3});
+	toExport2.setElement(2,0,{2});
+	toExport2.setElement(2,1,{1});
+
+	toExport2.exportToFile("matrix2.csv");
+
+	Matrix<Rational> imported1(2,3);
+	imported1.importFromFile("matrix1.csv");
+	Matrix imported2(3,2);
+	imported2.importFromFile("matrix2.csv");
+
+	std::cout << "IMPORTS" << std::endl;
+	std::cout << imported1 << std::endl << imported2 << std::endl;
+
 	return 0;
 
 }

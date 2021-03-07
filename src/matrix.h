@@ -2,9 +2,11 @@
 #define MATRIX_H
 
 #include <iostream>
+#include <fstream>
 #include <exception>
 #include <string>
 #include <sstream>
+#include "stringhandler.h"
 
 #include "real.h"
 
@@ -87,6 +89,39 @@ public:
 			}
 			std::cout << *this << std::endl;
 		}
+	}
+
+	void importFromFile(const std::string& filename) {
+		std::ifstream infile;
+		infile.open(filename,std::ios_base::in);
+		std::string line;
+		for (unsigned i=0;i<height;i++) {
+			infile >> line;
+			std::list<std::string> components = String::split(line,';');
+			unsigned j=0;
+			for (auto col : components) {
+				matrix[i][j] = T(col);
+				j++;
+			}
+		}
+		infile.close();
+	}
+
+	void exportToFile(const std::string& filename) const {
+		std::ofstream outfile;
+		outfile.open(filename,std::ios_base::app);
+		std::stringstream result;
+		for (unsigned i=0;i<height;i++) {
+			for (unsigned j=0;j<width;j++) {
+				result << matrix[i][j].toFileFormat();
+				if (j != width-1) {
+					result << ";";
+				}
+			}
+			result << std::endl;
+		}
+		outfile << result.str();
+		outfile.close();
 	}
 
 	unsigned getHeight() const {
