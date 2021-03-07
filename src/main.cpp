@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "rational.h"
 #include "matrix.h"
 #include "real.h"
@@ -183,7 +184,7 @@ int main() {
 	} catch (std::exception& ex) {
 		std::cout << ex.what() << std::endl;
 	}
-
+/*
 	Matrix<Rational> toTransform(3,4);
 	toTransform.setElement(0,0,Rational(1,1));
 	toTransform.setElement(0,1,Rational(2,1));
@@ -197,14 +198,33 @@ int main() {
 	toTransform.setElement(2,1,Rational(5,1));
 	toTransform.setElement(2,2,Rational(2,1));
 	toTransform.setElement(2,3,Rational(18,1));
+*/
 
+	Matrix<Rational> toTransform(3,4);
+	toTransform.setElement(0,0,{1,1});
+	toTransform.setElement(0,1,{2,1});
+	toTransform.setElement(0,2,{3,1});
+	toTransform.setElement(0,3,{14,1});
+	toTransform.setElement(1,0,{3,1});
+	toTransform.setElement(1,1,{1,1});
+	toTransform.setElement(1,2,{4,1});
+	toTransform.setElement(1,3,{17,1});
+	toTransform.setElement(2,0,{2,1});
+	toTransform.setElement(2,1,{5,1});
+	toTransform.setElement(2,2,{2,1});
+	toTransform.setElement(2,3,{18,1});
+	//std::stringstream transformerstream;
+	//std::ofstream fileout;
+	//fileout.open("transform_output.txt",std::ios_base::app);
 	TransformerIO* simple = new SimpleIO;
 	Transformer<Rational> t = 
 		Transformer<Rational>::TransformerBuilder<Rational>(toTransform)
 		.setInteractive(simple)
-		.setVerbose()
+		.setVerbose(&std::cout)
 		.build();
 	t.transform();
+	//fileout.close();
+	//std::cout << transformerstream.str() << std::endl;
 	return 0;
 
 }

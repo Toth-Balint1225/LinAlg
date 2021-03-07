@@ -6,6 +6,7 @@
 #include <exception>
 #include <string>
 #include <sstream>
+#include <ostream>
 
 /*
  * linear transformation algorithm
@@ -24,6 +25,15 @@ public:
 	virtual bool isFinished() const = 0;
 };
 
+
+template <class T = Real>
+class Optimizer {
+public:
+	virtual ~Optimizer() = default;
+	virtual std::pair<unsigned,unsigned> getGen(const Matrix<T>& state) const = 0;
+	virtual bool isFinished(const Matrix<T>& state) const = 0;
+};
+
 class invalid_generator : public std::exception {
 private:
 	std::string msg;
@@ -38,12 +48,6 @@ public:
 	}
 };
 
-class Optimizer {
-public:
-	virtual ~Optimizer() = default;
-	virtual bool isFinished() const = 0;
-};
-
 template <class T = Real>
 class Transformer {
 public:
@@ -53,8 +57,9 @@ public:
 		Matrix<Type> model;
 		bool interactive = false;
 		bool verbose = false;
+		std::ostream* verboseOutput = nullptr;
 		TransformerIO* io = nullptr;
-		Optimizer* opt = nullptr;
+		Optimizer<T>* opt = nullptr;
 		friend class Transformer;
 	public:
 		TransformerBuilder(const Matrix<Type>& _model) :
@@ -66,13 +71,14 @@ public:
 			return *this;
 		}
 
-		TransformerBuilder<Type>& setOptimized(Optimizer* _opt) {
+		TransformerBuilder<Type>& setOptimized(Optimizer<Type>* _opt) {
 			this->opt = _opt;
 			return *this;
 		}
 
-		TransformerBuilder<Type>& setVerbose() {
+		TransformerBuilder<Type>& setVerbose(std::ostream* _verboseOutput = &std::cout) {
 			this->verbose = true;
+			this->verboseOutput = _verboseOutput;
 			return *this;
 		}
 
@@ -85,13 +91,15 @@ private:
 	Matrix<T> model;
 	bool interactive;
 	bool verbose;
+	std::ostream* verboseOutput = nullptr;
 	TransformerIO* io;
-	Optimizer* opt;
+	Optimizer<T>* opt;
 public:
 	Transformer(const TransformerBuilder<T>& builder):
 		model(builder.model), 
 		interactive(builder.interactive),
 		verbose(builder.verbose),
+		verboseOutput(builder.verboseOutput),
 		io(builder.io),
 		opt(builder.opt) {
 	}
@@ -131,21 +139,28 @@ public:
 
 	Matrix<T> transform() const {
 		Matrix<T> transformed = model;
-		
-		while (false || (opt?(!opt->isFinished()):false) || (io?(!io->isFinished()):false)) {
+		while (false || (opt?(!opt->isFinished(model)):false) || (io?(!io->isFinished()):false)) {
+			if (verbose) {
+				*verboseOutput << transformed << std::endl;
+			}
 			unsigned genRow=0, genCol=0;
 			if (io) {
 				std::pair<unsigned,unsigned> generator = io->getGen();
 				genRow = generator.first;
 				genCol = generator.second;
 			}
+			if (opt) {
+				std::pair<unsigned,unsigned> generator = opt->getGen(model);
+				genRow = generator.first;
+				genCol = generator.second;
+			}
 			try {
 				transformed = step(transformed,genRow,genCol);
-				if (verbose) {
-					std::cout << transformed << std::endl;
-				}
 			} catch (std::exception& ex) {
 				std::cout << ex.what() << std::endl;
+			}
+			if (verbose) {
+				*verboseOutput << transformed << std::endl;
 			}
 		}
 		return transformed;
