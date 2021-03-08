@@ -259,6 +259,21 @@ int main() {
 	std::cout << "IMPORTS" << std::endl;
 	std::cout << imported1 << std::endl << imported2 << std::endl;
 
+
+	Matrix<Rational> opre(4,8);
+	opre.importFromFile("opre.csv");
+
+	std::ofstream fileout;
+	fileout.open("transform.csv",std::ios_base::app);
+	TransformerIO* simpleIO = new SimpleIO;
+	Transformer<Rational> trafo = 
+		Transformer<Rational>::TransformerBuilder<Rational>(opre)
+		.setInteractive(simpleIO)
+		.setVerbose(&fileout)
+		.build();
+	Matrix<Rational> transformed = trafo.transform();
+	transformed.exportToFile("transformed.csv");
+	fileout.close();
 	return 0;
 
 }

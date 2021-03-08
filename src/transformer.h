@@ -136,13 +136,18 @@ public:
 		}
 		return next;
 	}
+	
+	void displayVerbose(unsigned row, unsigned col, const Matrix<T>& transformed) const {
+		*verboseOutput << "(" << row << ";" << col << ")" << std::endl;
+		*verboseOutput << transformed << std::endl;
+	}
 
 	Matrix<T> transform() const {
 		Matrix<T> transformed = model;
+		if (verbose) {
+			displayVerbose(0,0,transformed);
+		}
 		while (false || (opt?(!opt->isFinished(model)):false) || (io?(!io->isFinished()):false)) {
-			if (verbose) {
-				*verboseOutput << transformed << std::endl;
-			}
 			unsigned genRow=0, genCol=0;
 			if (io) {
 				std::pair<unsigned,unsigned> generator = io->getGen();
@@ -160,7 +165,7 @@ public:
 				std::cout << ex.what() << std::endl;
 			}
 			if (verbose) {
-				*verboseOutput << transformed << std::endl;
+				displayVerbose(genRow, genCol, transformed);
 			}
 		}
 		return transformed;
