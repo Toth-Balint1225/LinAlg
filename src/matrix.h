@@ -82,6 +82,18 @@ public:
 	}
 
 	void setInteractive() {
+		if (matrix) {
+			for (unsigned i=0;i<height;i++)
+				delete [] matrix[i];
+			delete [] matrix;
+		}
+		std::cout << "height: ";
+		std::cin >> height;
+		std::cout << "width: ";
+		std::cin >> width;
+		matrix = new T*[height];
+		for (unsigned i=0;i<height;i++)
+			matrix[i] = new T[width];
 		for (unsigned i=0;i<height;i++) {
 			for (unsigned j=0;j<width;j++) {
 				std::cout << "(" << i << ","<< j << ")" << std::endl;
@@ -92,9 +104,23 @@ public:
 	}
 
 	void importFromFile(const std::string& filename) {
+		if (matrix) {
+			for (unsigned i=0;i<height;i++)
+				delete [] matrix[i];
+			delete [] matrix;
+		}
 		std::ifstream infile;
 		infile.open(filename,std::ios_base::in);
 		std::string line;
+		infile >> line;
+		std::list<std::string> parameters = String::split(line,'@');
+		height = String::strToNum<int>(parameters.front());
+		width = String::strToNum<int>(parameters.back());
+
+		matrix = new T*[height];
+		for (unsigned i=0;i<height;i++)
+			matrix[i] = new T[width];
+
 		for (unsigned i=0;i<height;i++) {
 			infile >> line;
 			std::list<std::string> components = String::split(line,';');
@@ -111,6 +137,7 @@ public:
 		std::ofstream outfile;
 		outfile.open(filename,std::ios_base::app);
 		std::stringstream result;
+		result << height << "@" << width << std::endl;
 		for (unsigned i=0;i<height;i++) {
 			for (unsigned j=0;j<width;j++) {
 				result << matrix[i][j].toFileFormat();

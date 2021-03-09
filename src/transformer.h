@@ -17,7 +17,6 @@
  *	interactive [I/O] | automatic [optimizer]
  *
 */
-
 class TransformerIO {
 public:
 	virtual ~TransformerIO() = default;
@@ -50,43 +49,6 @@ public:
 
 template <class T = Real>
 class Transformer {
-public:
-	template <class Type = Real>
-	class TransformerBuilder {
-	private:
-		Matrix<Type> model;
-		bool interactive = false;
-		bool verbose = false;
-		std::ostream* verboseOutput = nullptr;
-		TransformerIO* io = nullptr;
-		Optimizer<T>* opt = nullptr;
-		friend class Transformer;
-	public:
-		TransformerBuilder(const Matrix<Type>& _model) :
-			model(_model) {
-		}
-		TransformerBuilder<Type>& setInteractive(TransformerIO* _io) {
-			this->interactive = true;
-			this->io = _io;
-			return *this;
-		}
-
-		TransformerBuilder<Type>& setOptimized(Optimizer<Type>* _opt) {
-			this->opt = _opt;
-			return *this;
-		}
-
-		TransformerBuilder<Type>& setVerbose(std::ostream* _verboseOutput = &std::cout) {
-			this->verbose = true;
-			this->verboseOutput = _verboseOutput;
-			return *this;
-		}
-
-		Transformer<Type> build() {
-			return Transformer(*this);
-		}
-	};
-
 private:
 	Matrix<T> model;
 	bool interactive;
@@ -95,6 +57,42 @@ private:
 	TransformerIO* io;
 	Optimizer<T>* opt;
 public:
+template <class Type = Real>
+class TransformerBuilder {
+private:
+	Matrix<Type> model;
+	bool interactive = false;
+	bool verbose = false;
+	std::ostream* verboseOutput = nullptr;
+	TransformerIO* io = nullptr;
+	Optimizer<Type>* opt = nullptr;
+	friend class Transformer;
+public:
+	TransformerBuilder(const Matrix<Type>& _model) :
+		model(_model) {
+	}
+	TransformerBuilder<Type>& setInteractive(TransformerIO* _io) {
+		this->interactive = true;
+		this->io = _io;
+		return *this;
+	}
+
+	TransformerBuilder<Type>& setOptimized(Optimizer<Type>* _opt) {
+		this->opt = _opt;
+		return *this;
+	}
+
+	TransformerBuilder<T>& setVerbose(std::ostream* _verboseOutput = &std::cout) {
+		this->verbose = true;
+		this->verboseOutput = _verboseOutput;
+		return *this;
+	}
+
+	Transformer<Type> build() {
+		return Transformer(*this);
+	}
+};
+
 	Transformer(const TransformerBuilder<T>& builder):
 		model(builder.model), 
 		interactive(builder.interactive),
@@ -102,6 +100,8 @@ public:
 		verboseOutput(builder.verboseOutput),
 		io(builder.io),
 		opt(builder.opt) {
+	}
+	Transformer() {
 	}
 	~Transformer() {
 	}

@@ -4,31 +4,13 @@
 #include "matrix.h"
 #include "real.h"
 #include "transformer.h"
+#include "replui.h"
 // scope:
 // - vector operations (override operators)
 // - matrix operatons
 // - base transformation!
-
-class SimpleIO : public TransformerIO {
-public:
-	virtual ~SimpleIO() override = default; 
-	std::pair<unsigned, unsigned> getGen() const override {
-		unsigned row, col;
-		std::cout << "generator row: ";
-		std::cin >> row;
-		std::cout << "generator column: ";
-		std::cin >> col;
-		return std::pair<unsigned,unsigned>(row,col);
-	}
-	virtual bool isFinished() const override {
-		bool result = false;
-		std::cout << "Finished? [1/0] : ";
-		std::cin >> result;
-		return result;
-	}
-};
-
 int main() {
+/*
 	std::cout << "Hello World" << std::endl;
 	Rational r1(1,10);
 	Rational r2(2,5);
@@ -184,6 +166,7 @@ int main() {
 	} catch (std::exception& ex) {
 		std::cout << ex.what() << std::endl;
 	}
+*/
 /*
 	Matrix<Rational> toTransform(3,4);
 	toTransform.setElement(0,0,Rational(1,1));
@@ -229,7 +212,7 @@ int main() {
 */
 	//fileout.close();
 	//std::cout << transformerstream.str() << std::endl;
-
+/*
 
 	Matrix<Rational> toExport1(2,3);
 	toExport1.setElement(0,0,{1,1});
@@ -274,6 +257,11 @@ int main() {
 	Matrix<Rational> transformed = trafo.transform();
 	transformed.exportToFile("transformed.csv");
 	fileout.close();
+*/
+
+	ReplUI<Rational> ui;
+	ui.start();
+
 	return 0;
 
 }
