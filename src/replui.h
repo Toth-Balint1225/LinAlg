@@ -10,6 +10,7 @@
 #include <vector>
 #include "transformer.h"
 #include "simpleio.h"
+#include "rational.h"
 
 /*
  * SYNTAX:
@@ -111,7 +112,6 @@ private:
 				.build();
 			trafo.transform();
 
-
 		} else {
 			std::cout << "Invalid argument. " << name << " is not a matrix or it does not exist." << std::endl;
 		}
@@ -130,6 +130,12 @@ private:
 		Matrix<T> m(1,1);
 		m.importFromFile(name+".lab");
 		var.insert(std::pair<std::string,Matrix<T>>(name,m));
+	}
+
+	void init(const std::string& type, const std::string& name, const std::string& expr) {
+		if (type.compare("matrix") == 0) {
+			
+		}
 	}
 
 public:

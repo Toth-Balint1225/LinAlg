@@ -13,19 +13,24 @@ Rational::Rational(const Rational& other):
 }
 
 Rational::Rational(const std::string& str) {
-	std::list<std::string> components = String::split(str,',');
-	numerator = String::strToNum<int>(components.front());
-	denominator = String::strToNum<int>(components.back());
+	std::list<std::string> components = String::split(str,'/');
+	if (components.size() == 2) {
+		numerator = String::strToNum<int>(components.front());
+		denominator = String::strToNum<int>(components.back());
+	} else {
+		numerator = String::strToNum<int>(components.front());
+		denominator = 1;
+	}
 }
 
 Rational::~Rational() {
 }
 
 void Rational::setInteractive() {
-	std::cout << "numerator: ";
-	std::cin >> numerator;
-	std::cout << "denominator: ";
-	std::cin >> denominator;
+	std::string input;
+	std::cout << "rational: ";
+	std::cin >> input;
+	*this = Rational(input);
 }
 
 Rational Rational::null() {
@@ -207,7 +212,7 @@ std::ostream& operator <<(std::ostream& stream, const Rational& toDisp) {
 
 std::string Rational::toFileFormat() const {
 	std::stringstream ss;
-	ss << numerator << "," << denominator;
+	ss << numerator << "/" << denominator;
 	return ss.str();
 }
 

@@ -135,7 +135,7 @@ public:
 
 	void exportToFile(const std::string& filename) const {
 		std::ofstream outfile;
-		outfile.open(filename,std::ios_base::app);
+		outfile.open(filename,std::ios_base::out);
 		std::stringstream result;
 		result << height << "@" << width << std::endl;
 		for (unsigned i=0;i<height;i++) {
